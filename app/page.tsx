@@ -75,8 +75,10 @@ export default function Home() {
 
       if (!plays.length) {
         console.error("Aucune donnée trouvée :", data);
-        setModalMessage("Aucune action trouvée dans la réponse ESPN 😕");
-        setIsModalOpen(true);
+        // 🟣 Ici on met le même message que pour le cas "échauffement"
+        setModalMessage("Inès s’échauffe 🏀");
+        setIsWaitingModalOpen(true);
+        setTimeout(() => setIsWaitingModalOpen(false), 3000);
         return;
       }
 
