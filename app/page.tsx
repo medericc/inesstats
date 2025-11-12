@@ -32,8 +32,15 @@ export default function Home() {
   const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
 
   const matchLinks = [
-        { name: "Boston", url: "/api/espn?gameId=401825004" },
-  { name: "Houston UH", url: "/api/espn?gameId=401822211" },
+
+  { name: "Rutgers", url: "/api/espn?gameId=401813740" },
+ 
+
+        { name: "Emmanuel", url: "/api/espn?gameId=401825004" },
+   { name: "Merrimack", url: "/api/espn?gameId=401825003" },
+ 
+
+        { name: "Manhattan", url: "/api/espn?gameId=401813825" },
   ];
 
   // 🔁 Fonction principale
