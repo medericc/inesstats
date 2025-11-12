@@ -15,7 +15,7 @@ export default function InputForm({
      <div className="flex flex-col items-center gap-4 w-full max-w-md">
       <Button 
         onClick={onGenerate} 
-        className="bg-[#001E5A] text-gray-100 font-bold py-2 px-4 rounded-lg shadow-md hover:bg-[#000C32] hover:text-white transition-colors w-full"
+        className="bg-[#09588d] text-gray-100 font-bold py-2 px-4 rounded-lg shadow-md hover:bg-[#03396b] hover:text-white transition-colors w-full"
       >
         VOIR STATS
       </Button>
