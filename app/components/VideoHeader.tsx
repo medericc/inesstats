@@ -4,7 +4,7 @@ export default function VideoHeader({ className = "" }: { className?: string }) 
       <div className="relative w-full h-[200px] overflow-hidden rounded-lg shadow-lg">
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/video.webm"
+          src="/video.mp4"
           autoPlay
           loop
           muted
