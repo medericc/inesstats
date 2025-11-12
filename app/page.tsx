@@ -1,70 +1,153 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import MatchTable from './components/Matchtable';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+import VideoHeader from './components/VideoHeader';
+import InputForm from './components/InputForm';
+import MatchTable from './components/MatchTable';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+// 🕒 Convertit les secondes en format mm:ss
+const formatTime = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${minutes}:${secs.toString().padStart(2, "0")}`;
+};
 
 export default function Home() {
-  const [data, setData] = useState<string[][]>([]);
+  const [csvGenerated, setCsvGenerated] = useState(false);
+  const [csvData, setCsvData] = useState<string[][]>([]);
+  const [selectedLink, setSelectedLink] = useState<string>('');
+  const [customUrl, setCustomUrl] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchCTE = async () => {
-      try {
-        // Exemple : ID de match 620906 — à changer selon le match
-        const res = await fetch('/api/proxy', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ game: '620906' }),
-        });
+  const matchLinks = [
+        { name: "Boston", url: "/api/espn?gameId=401825004" },
+  { name: "Houston UH", url: "/api/espn?gameId=401822211" },
+  ];
 
-        const html = await res.text();
-        console.log('HTML reçu:', html);
+  // 🔁 Fonction principale
+  const handleGenerate = async () => {
+    // Si aucun match choisi
+    if (selectedLink === "none") {
+      setModalMessage("Inès s’échauffe 🏀");
+      setIsWaitingModalOpen(true);
+      setTimeout(() => setIsWaitingModalOpen(false), 3000);
+      return;
+    }
 
-        // Parse le HTML du play-by-play
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const rows = Array.from(doc.querySelectorAll('tr.pxprow'));
-        const allRows: string[][] = [];
+    const url = selectedLink || customUrl || "https://sidearmstats.com/rice/wbball/game.json?detail=full";
 
-        for (const row of rows) {
-          const text = row.textContent?.toLowerCase() || '';
-          if (!text.includes('ines')) continue;
-
-          const chrono = row.querySelector('td.text-center')?.textContent?.trim() || '';
-          const actionType = (() => {
-            if (row.classList.contains('pxp_GOOD')) return '2pt';
-            if (row.classList.contains('pxp_MISS')) return '2pt';
-            if (row.classList.contains('pxp_REBOUND')) return 'rebound';
-            if (row.classList.contains('pxp_ASSIST')) return 'assist';
-            if (row.classList.contains('pxp_STEAL')) return 'steal';
-            if (row.classList.contains('pxp_BLOCK')) return 'block';
-            if (row.classList.contains('pxp_TURNOVER')) return 'turnover';
-            if (row.classList.contains('pxp_FOUL')) return 'foul';
-            return 'other';
-          })();
-
-          const success = (() => {
-            if (row.classList.contains('pxp_GOOD')) return '1';
-            if (row.classList.contains('pxp_MISS')) return '0';
-            if (row.classList.contains('pxp_TURNOVER') || row.classList.contains('pxp_FOUL')) return '0';
-            return '1';
-          })();
-
-          allRows.push(['?', chrono, actionType, success]); // '?' car pas de notion de période ici
-        }
-
-        setData(allRows);
-      } catch (err) {
-        console.error('Erreur parsing:', err);
+    try {
+      let response;
+      if (url.startsWith("/")) {
+        response = await fetch(url); // API interne (pas de CORS)
+      } else {
+        const proxyUrl = `/api/proxy?url=${encodeURIComponent(url)}`;
+        response = await fetch(proxyUrl);
       }
-    };
 
-    fetchCTE();
-  }, []);
+      const data = await response.json();
+
+      // 🧩 Accepte à la fois un tableau brut ou data.Plays
+      const plays = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.Plays)
+        ? data.Plays
+        : [];
+
+      if (!plays.length) {
+        console.error("Aucune donnée trouvée :", data);
+        setModalMessage("Aucune action trouvée dans la réponse ESPN 😕");
+        setIsModalOpen(true);
+        return;
+      }
+
+      console.log("✅ Données ESPN récupérées :", plays.length, "actions");
+      console.log("👀 Exemple :", plays[0]);
+
+      // ✅ Tes données sont déjà au bon format [period, chrono, action, réussite]
+      setCsvData(plays);
+      setCsvGenerated(true);
+
+    } catch (error) {
+      console.error("Erreur dans handleGenerate:", error);
+      setModalMessage("Erreur pendant le chargement des données 😅");
+      setIsModalOpen(true);
+    }
+  };
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4 text-center">Actions d’Inès Debroise</h1>
-      <MatchTable data={data} />
+    <div className="flex flex-col items-center justify-center min-h-screen p-6 sm:p-12 gap-8 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+      <VideoHeader className="absolute top-0 left-0 w-full" />
+
+      <main className="flex flex-col items-center gap-6 w-full max-w-lg sm:max-w-2xl md:max-w-4xl">
+        <Select value={selectedLink} onValueChange={setSelectedLink}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Sélectionne un match" />
+          </SelectTrigger>
+          <SelectContent>
+            {matchLinks.map((link) => (
+              <SelectItem key={link.url} value={link.url}>
+                {link.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <InputForm 
+          value={customUrl} 
+          onChange={(e) => setCustomUrl(e.target.value)} 
+          onGenerate={handleGenerate} 
+        />
+
+        {csvGenerated && (
+          <div className="w-full overflow-x-auto">
+            <MatchTable data={csvData} />
+          </div>
+        )}
+      </main>
+
+      {/* ⚠️ Modale d'erreur */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="w-[80%] max-w-xs rounded-lg shadow-lg bg-white dark:bg-gray-800 p-6">
+          <DialogHeader>
+            <DialogTitle className="text-center mb-4">⚠️ Erreur</DialogTitle>
+            <DialogDescription className="text-center mt-4">{modalMessage}</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      {/* ⏳ Modale d’attente */}
+      <Dialog open={isWaitingModalOpen} onOpenChange={setIsWaitingModalOpen}>
+        <DialogContent className="w-[80%] max-w-xs rounded-lg shadow-lg bg-white dark:bg-gray-800 p-6">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-center gap-2 mb-2">⏳ Patiente</DialogTitle>
+            <DialogDescription className="text-center mt-2">{modalMessage}</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      <footer className="text-sm text-gray-900 mt-8">
+        <a
+          href="https://www.youtube.com/@fan_lucilej"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          Produit par @fan_carlaleite
+        </a>
+      </footer>
     </div>
   );
 }

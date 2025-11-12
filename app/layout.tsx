@@ -2,7 +2,7 @@ import './globals.css';
 import ServiceWorkerRegister from './ServiceWorkerRegister'; // 👈 ajout du composant client
 import { Analytics } from "@vercel/analytics/react";
 export const metadata = {
-    title: "Louann LiveStats",
+    title: "Inès LiveStats",
     description: "Les stats détaillées en direct.",
      manifest: "/manifest.json", 
     icons: {
@@ -11,28 +11,28 @@ export const metadata = {
         apple: "/apple-touch-icon.png", // iPhone/iPad
     },
     other: {
-"apple-mobile-web-app-title": "LouSchedule",
+"apple-mobile-web-app-title": "InèsSchedule",
 },
     openGraph: {
-      title: "Louann LiveStats",
+      title: "Inès LiveStats",
       description: "Le play by play en direct.",
-      url: "https://lou-livestats.vercel.app/",
-      siteName: "Louann Stats",
+      url: "https://ines-livestats.vercel.app/",
+      siteName: "Inès Stats",
       images: [
         {
-          url: "https://lou-livestats.vercel.app/preview.jpg", // Mets une image propre ici !
+          url: "https://ines-livestats.vercel.app/ines-debroise-og.jpg", // Mets une image propre ici !
           width: 1200,
           height: 630,
-          alt: "LiveStats de Louann",
+          alt: "LiveStats d'Inès",
         },
       ],
       type: "website",
     },
     twitter: {
       card: "summary_large_image", // ✅ Correction ici
-      title: "Louann LiveStats",
+      title: "Inès LiveStats",
       description: "Les stats détaillées en direct.",
-      images: ["https://lou-livestats.vercel.app/preview.jpg"], // Même image que Open Graph
+      images: ["https://ines-livestats.vercel.app/preview.jpg"], // Même image que Open Graph
     },
   };
   

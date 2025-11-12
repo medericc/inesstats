@@ -32,7 +32,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'game manquant' }, { status: 400 });
     }
 
-    const url = `https://stats.statbroadcast.com/interface/webservice/stats?data=ZXZlbnQ9NjIwOTA2JnhtbD11cmkvNjIwOTA2LnhtbCZ4c2w9YmFza2V0YmFsbC9zYi5iYmdhbWUubW9iaWxlLnN0YXR1cy54c2wmc3BvcnQ9YmJnYW1lJmZpbGV0aW1lPTEmdHlwZT1tb2JpbGUmc3RhcnQ9dHJ1ZQ==&_=1762816983355`;
+    // ⚡️ VERSION PLAY-BY-PLAY ("pxp") au lieu de "mobile"
+    const url = `https://stats.statbroadcast.com/interface/webservice/stats?data=ZXZlbnQ9${game}JnhtbD11cmkv${game}.eG1sJnhzbD1iYXNrZXRiYWxsL3NiLmJiZ2FtZS5tb2JpbGUucHhwLnhtbCZzcG9ydD1iYmdhbWUmZmlsZXRpbWU9MSZ0eXBlPXB4cCZzdGFydD10cnVl&_=1762816983355`;
+
     const resp = await fetch(url);
     const text = await resp.text();
 
