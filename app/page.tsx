@@ -32,7 +32,7 @@ export default function Home() {
   const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
 
   const matchLinks = [
-
+{ name: "UAlbany", url: "/api/espn?gameId=401825005" },
   { name: "Rutgers", url: "/api/espn?gameId=401813740" },
  
 
