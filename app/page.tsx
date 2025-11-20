@@ -33,7 +33,7 @@ export default function Home() {
 
   const matchLinks = [
 
-{ name: "UAlbany", url: "/api/espn?gameId=401825005" },
+{ name: "Princeton", url: "/api/espn?gameId=401823108" },
  
 
 
