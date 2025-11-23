@@ -32,8 +32,8 @@ export default function Home() {
   const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
 
   const matchLinks = [
-
-{ name: "Princeton", url: "/api/espn?gameId=401823108" },
+{ name: "NC State", url: "/api/espn?gameId=401817578" },
+{ name: "Holy Cross", url: "/api/espn?gameId=401823108" },
  
 
 
