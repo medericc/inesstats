@@ -54,33 +54,37 @@ export async function GET(request: Request) {
       const madeKeywords = ["made", "make", "makes", "good"];
       const missedKeywords = ["missed", "miss", "misses"];
 
-      const isAssist = text.includes(`assisted by ${playerName}`);
-      const isShooter = text.includes(playerName) && !isAssist;
+     const isAssist =
+  text.includes(`${playerName} assists`) ||
+  text.includes(`assisted by ${playerName}`);
 
-      if (isAssist) {
-        action = "assist";
-        success = "1";
-      } else if (isShooter) {
-        if (text.includes("three point")) action = "3pt";
-        else if (
-          text.includes("jump shot") ||
-          text.includes("layup") ||
-          text.includes("jumper") ||
-          text.includes("hook")
-        ) action = "2pt";
-        else if (text.includes("free throw")) action = "1pt";
-        else if (text.includes("rebound")) action = "rebound";
-        else if (text.includes("turnover")) action = "turnover";
-        else if (text.includes("foul")) action = "foul";
-        else if (text.includes("block")) action = "block";
-        else if (text.includes("steal")) action = "steal";
+const isShooter = text.includes(playerName) && !isAssist;
 
-        if (madeKeywords.some(k => text.includes(k))) {
-          success = "1";
-        } else if (missedKeywords.some(k => text.includes(k))) {
-          success = "0";
-        }
-      }
+if (isAssist) {
+  action = "assist";
+  success = "1";
+} else if (isShooter) {
+  if (text.includes("three point")) action = "3pt";
+  else if (
+    text.includes("jump shot") ||
+    text.includes("layup") ||
+    text.includes("jumper") ||
+    text.includes("hook")
+  ) action = "2pt";
+  else if (text.includes("free throw")) action = "1pt";
+  else if (text.includes("rebound")) action = "rebound";
+  else if (text.includes("turnover")) action = "turnover";
+  else if (text.includes("foul")) action = "foul";
+  else if (text.includes("block")) action = "block";
+  else if (text.includes("steal")) action = "steal";
+
+  if (madeKeywords.some(k => text.includes(k))) {
+    success = "1";
+  } else if (missedKeywords.some(k => text.includes(k))) {
+    success = "0";
+  }
+}
+
 
       return [period, chrono, action, success];
     });
