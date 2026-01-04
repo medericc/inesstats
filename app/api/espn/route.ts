@@ -68,6 +68,7 @@ if (isAssist) {
   else if (
     text.includes("jump shot") ||
     text.includes("layup") ||
+    text.includes("jumpshot") ||
     text.includes("jumper") ||
     text.includes("hook")
   ) action = "2pt";
