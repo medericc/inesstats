@@ -40,33 +40,33 @@ export default function Home() {
    
       { name: "Saint Bonaventure", url: "/api/espn?gameId=401829068" },
    
-     { name: "George Washington", url: "/api/espn?gameId=401829061" },
-      { name: "Loyola", url: "/api/espn?gameId=401829034" },
+//      { name: "George Washington", url: "/api/espn?gameId=401829061" },
+//       { name: "Loyola", url: "/api/espn?gameId=401829034" },
  
-     { name: "Richmond", url: "/api/espn?gameId=401829029" },
+//      { name: "Richmond", url: "/api/espn?gameId=401829029" },
  
-    { name: "Wagner", url: "/api/espn?gameId=401825008" },
+//     { name: "Wagner", url: "/api/espn?gameId=401825008" },
  
-{ name: "Providence", url: "/api/espn?gameId=401825007" },
+// { name: "Providence", url: "/api/espn?gameId=401825007" },
  
-{ name: "Black Bears", url: "/api/espn?gameId=401822844" },
+// { name: "Black Bears", url: "/api/espn?gameId=401822844" },
  
-{ name: "Saint Joseph's", url: "/api/espn?gameId=401829021" },
-    { name: "Princeton", url: "/api/espn?gameId=401825006" },
-{ name: "NC State", url: "/api/espn?gameId=401817578" },
-{ name: "Holy Cross", url: "/api/espn?gameId=401823108" },
- 
-
-
-{ name: "UAlbany", url: "/api/espn?gameId=401825005" },
-  { name: "Rutgers", url: "/api/espn?gameId=401813740" },
+// { name: "Saint Joseph's", url: "/api/espn?gameId=401829021" },
+//     { name: "Princeton", url: "/api/espn?gameId=401825006" },
+// { name: "NC State", url: "/api/espn?gameId=401817578" },
+// { name: "Holy Cross", url: "/api/espn?gameId=401823108" },
  
 
-        { name: "Emmanuel", url: "/api/espn?gameId=401825004" },
-   { name: "Merrimack", url: "/api/espn?gameId=401825003" },
+
+// { name: "UAlbany", url: "/api/espn?gameId=401825005" },
+//   { name: "Rutgers", url: "/api/espn?gameId=401813740" },
  
 
-        { name: "Manhattan", url: "/api/espn?gameId=401813825" },
+//         { name: "Emmanuel", url: "/api/espn?gameId=401825004" },
+//    { name: "Merrimack", url: "/api/espn?gameId=401825003" },
+ 
+
+//         { name: "Manhattan", url: "/api/espn?gameId=401813825" },
   ];
 
   // 🔁 Fonction principale
