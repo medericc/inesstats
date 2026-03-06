@@ -32,21 +32,23 @@ export default function Home() {
   const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
 
   const matchLinks = [
+     { name: "Loyola CR", url: "/api/espn?gameId=401851259" },
+   
  { name: "George Washington", url: "/api/espn?gameId=401829158" },
    
       { name: "Richmond", url: "/api/espn?gameId=401829153" },
    
      { name: "Fordham", url: "/api/espn?gameId=401829143" },
    
-     { name: "La Salle", url: "/api/espn?gameId=401829140" },
+//      { name: "La Salle", url: "/api/espn?gameId=401829140" },
    
-     { name: "George Mason", url: "/api/espn?gameId=401829132" },
+//      { name: "George Mason", url: "/api/espn?gameId=401829132" },
    
- { name: "VCU Rams", url: "/api/espn?gameId=401829129" },
+//  { name: "VCU Rams", url: "/api/espn?gameId=401829129" },
    
-       { name: "Saint Louis", url: "/api/espn?gameId=401829123" },
+//        { name: "Saint Louis", url: "/api/espn?gameId=401829123" },
    
-    { name: "St Joseph's", url: "/api/espn?gameId=401829116" },
+//     { name: "St Joseph's", url: "/api/espn?gameId=401829116" },
    
     //  { name: "Fordham", url: "/api/espn?gameId=401829106" },
    
