@@ -44,9 +44,7 @@ return (
 <html lang="fr">
 
 <body className="min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
-<header className="bg-gradient-to-r from-[#08618a] to-[#054a79] text-white p-8 text-4xl font-extrabold text-center shadow-md tracking-wide">
-        LIVESTATS
-      </header>
+
 <main className="container mx-auto mt-4">{children}</main>
  {/* Analytics */}
         <Analytics />
